@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>RAz</title>
+    <meta charset="utf-8">
+    <link rel="icon" href="swaggate/favicon.ico"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+    var parole=[];
+    var punt=0;
+    var trovate=[];
+    var cons=true;
+    $(function(){
+      $.get("http://localhost/RAz/connect.php",function(data){
+        parole = data.split('~');
+      });
+      $(".bottoneInvia").click(function(){
+        var ins = document.getElementById("ins").value;
+        ins = ins.toLowerCase();
+        cons = true;
+        for(var j=0; j<trovate.length; j++){
+          if(ins == trovate[j]){
+            cons=false;
+            document.getElementById("ins").value="";
+            document.getElementById("O").innerHTML="GIÀ MESSA!";
+            document.getElementById("O").style.backgroundColor="#ffad33";
+            return;
+          }
+        }
+        for(var i=0; i<70618 && cons == true; i++){
+          if(ins == parole[i]){
+            punt = punt + ins.length;
+            document.getElementById("punti").innerHTML = punt;
+            trovate.push(ins);
+            i=70618;
+            document.getElementById("ins").value="";
+            document.getElementById("O").innerHTML="GIUSTO!";
+            document.getElementById("O").style.backgroundColor="#2eb82e";
+            return;
+          }
+        }
+        if(ins=="")
+        return;
+        document.getElementById("ins").value="";
+        document.getElementById("O").innerHTML="SBAGLIATO!";
+        document.getElementById("O").style.backgroundColor="#ff3333";
+      });
+      var cella;
+      function inserimento(cella){
+        var l="";
+        l = document.getElementById(cella).innerHTML;
+        if(flag)
+        document.getElementById("ins").value= document.getElementById("ins").value + l;
+        document.getElementById("ins").focus();
+      }
+      $("#c" + 0).click(function(){
+        inserimento("c"+0);
+      });
+      $("#c" + 1).click(function(){
+        inserimento("c"+1);
+      });
+      $("#c" + 2).click(function(){
+        inserimento("c"+2);
+      });
+      $("#c" + 3).click(function(){
+        inserimento("c"+3);
+      });
+      $("#c" + 4).click(function(){
+        inserimento("c"+4);
+      });
+      $("#c" + 5).click(function(){
+        inserimento("c"+5);
+      });
+      $("#c" + 6).click(function(){
+        inserimento("c"+6);
+      });
+      $("#c" + 7).click(function(){
+        inserimento("c"+7);
+      });
+      $("#c" + 8).click(function(){
+        inserimento("c"+8);
+      });
+      $("#c" + 9).click(function(){
+        inserimento("c"+9);
+      });
+      $("#c" + 10).click(function(){
+        inserimento("c"+10);
+      });
+      $("#c" + 11).click(function(){
+        inserimento("c"+11);
+      });
+    });
+    </script>
+    <style>
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin:0;
+    }
+    .tempo {
+      font: bold 80px Arial;
+      color:#ff3333;
+      margin: auto;
+    }
+    .bottoneStart {
+      width: 100%;
+      height: 10%;
+      background-color: #ff3333;
+      border: none;
+      color: white;
+      font: 20px arial;
+    }
+    .tabellaLettere {
+      border-spacing:5px;
+      text-align:center;
+      text-transform:uppercase;
+      font: bold 110px Arial;
+      margin:auto;
+      width:100%;
+      height:90%;
+    }
+    table.tabellaLettere td {
+      border: none;
+      background-color: #5cd65c;
+      width: 25%;
+      padding: 25px;
+    }
+    table.tabellaLettere td:hover {
+      background-color: #2eb82e;
+    }
+    .inputParola {
+      border: none;
+      float: left;
+      box-sizing: border-box;
+      text-transform: uppercase;
+      padding:10px;
+      font: bold 35px Arial;
+      width:50%;
+      height: 10%;
+    }
+    .bottoneInvia {
+      border: none;
+      box-sizing: border-box;
+      float: left;
+      width: 50%;
+      height: 10%;
+      font: 30px arial;
+      padding:10px;
+      background-color: #ff3333;
+      color: white;
+    }
+    .classifica{
+      text-align: left;
+      width: 100%;
+      font: 20px arial;
+      color: white;
+      border-collapse: collapse;
+    }
+    table.classifica td{
+      background-color: #6666ff;
+      padding: 8px;
+      border: none;
+      border-bottom: 3px solid #9999ff;
+    }
+    .bottoneStart:hover, .bottoneInvia:hover {
+      background-color: #b30000;
+    }
+    .tempo:hover {
+      color: #b30000;
+    }
+    .inselezionabile {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+    .colonnaLaterale {
+      width: 15%;
+      height: 100%;
+      box-sizing: border-box;
+      float: left;
+      text-align: center;
+    }
+    .colonnaCentrale {
+      width: 70%;
+      height: 100%;
+      box-sizing: border-box;
+      float: left;
+    }
+    </style>
+  </head>
+  <body style="background: url(swaggate/snoopD.gif) left bottom,url(swaggate/wp.gif);">
+    <div class="colonnaLaterale">
+      <p class="tempo inselezionabile" id="tempo">1:20</p>
+      <button class="bottoneStart" id="bottone" onclick="bottone()">GIOCA</button>
+      <div style="background-color:#6666ff; border: none; height:26%;" class="inselezionabile">
+        <p style="font: 25px Arial; color: white; padding-top:15px; margin:auto;margin-top:10px;">PUNTEGGIO</p>
+        <p style="font: bold 110px Arial; color: white; margin:auto;" id="punti">0</p>
+        <div style=" font: 25px arial; color: white;padding:15px;" class="inselezionabile" id="O">
+        </div>
+      </div>
+    </div>
+    <div class="colonnaCentrale">
+      <table class="tabellaLettere inselezionabile">
+        <tr>
+          <td id="c0">X</td>
+          <td id="c1">X</td>
+          <td id="c2">X</td>
+          <td id="c3">X</td>
+        </tr>
+        <tr>
+          <td id="c4">X</td>
+          <td id="c5">X</td>
+          <td id="c6">X</td>
+          <td id="c7">X</td>
+        </tr>
+        <tr>
+          <td id="c8">X</td>
+          <td id="c9">X</td>
+          <td id="c10">X</td>
+          <td id="c11">X</td>
+        </tr>
+      </table>
+      <input class="inputParola" placeholder="parola..." autocomplete="off" id="ins" onkeypress="char_consentiti()">
+      <button class="bottoneInvia" id="invia">INVIA</button>
+    </div>
+    <div class="colonnaLaterale">
+      <p style="font:bold 32px arial;color:#9999ff;margin:0;text-decoration:underline;" class="inselezionabile">CLASSIFICA</p>
+      <table class="classifica">
+        <tr>
+          <td id="n0">Zakmy</td>
+          <td id="p0">110</td>
+        </tr>
+        <tr>
+          <td id="n0">swag</td>
+          <td id="p0">94</td>
+        </tr>
+        <tr>
+          <td id="n0">asdasd</td>
+          <td id="p0">85</td>
+        </tr>
+        <tr>
+          <td id="n0">lollone</td>
+          <td id="p0">76</td>
+        </tr>
+        <tr>
+          <td id="n0">minestrone</td>
+          <td id="p0">65</td>
+        </tr>
+        <tr>
+          <td id="n0">iooo</td>
+          <td id="p0">54</td>
+        </tr>
+        <tr>
+          <td id="n0">gigidag</td>
+          <td id="p0">48</td>
+        </tr>
+        <tr>
+          <td id="n0">tuo padre</td>
+          <td id="p0">39</td>
+        </tr>
+        <tr>
+          <td id="n0">luigi</td>
+          <td id="p0">24</td>
+        </tr>
+        <tr>
+          <td id="n0">giangy</td>
+          <td id="p0">17</td>
+        </tr>
+      </table>
+    </div>
+    <script>
+    var lettere = generaLettere();
+    var flag = false;
+    var timerino;
+    document.getElementById("ins").disabled = true;
+    function generaLettere() {
+      var vocali="AEIOU";
+      var consonanti="BCDFGHLMNPQRSTVZ";
+      var cons = [];
+      var voc = [];
+      var lettere = [];
+      for(var i=0;i<8;i++) {
+        var r = Math.floor(Math.random()*16);
+        cons.push(consonanti.charAt(r));
+        for(var j=0;j<i;j++) {
+          if(cons[i]==cons[j]) {
+            cons.pop();
+            j=i;
+            i--;
+          }
+        }
+      }
+      for(var i=0;i<4;i++) {
+        var r = Math.floor(Math.random()*5);
+        voc.push(vocali.charAt(r));
+        for(var j=0;j<i;j++) {
+          if(voc[i]==voc[j]) {
+            voc.pop();
+            j=i;
+            i--;
+          }
+        }
+      }
+      for(var i=0;i<12;i++) {
+        if(i<4) {
+          lettere.push(voc[i]);
+        }
+        else {
+          lettere.push(cons[i-4]);
+        }
+      }
+      return lettere;
+    }
+    function mettiLettere() {
+      for(var i=0;i<12;i++) {
+        document.getElementById("c"+i).innerHTML=lettere[i];
+      }
+      return;
+    }
+    var let="";
+    function char_consentiti() {
+      let="";
+      for(var i=0; i<12;i++) {
+        let=let+lettere[i]+lettere[i].toLowerCase();
+      }
+      document.getElementById("ins").onkeypress = function(e) {
+        var chr = String.fromCharCode(e.which);
+        var pro = chr.charCodeAt(0);
+        if(pro == 13){
+          document.getElementById("invia").click() = true;
+        }
+        if (let.indexOf(chr) < 0)
+        return false;
+      };
+    }
+    function bottone() {
+      var bool = document.getElementById('bottone').innerHTML;
+      if(bool == "GIOCA") {
+        flag=true;
+        document.getElementById("ins").disabled = false;
+        mettiLettere();
+        startTimer()
+        char_consentiti();
+        document.getElementById("invia").disabled = false;
+        document.getElementById("bottone").innerHTML = "RESETTA";
+        document.getElementById("ins").focus();
+      }
+      else {
+        for(var i=0;i<12;i++) {
+          document.getElementById("c"+i).innerHTML="X";
+        }
+        punt=0;
+        document.getElementById("punti").innerHTML = punt;
+        document.getElementById("ins").disabled = true;
+        document.getElementById("ins").value="";
+        lettere = generaLettere();
+        flag = false;
+        document.getElementById("bottone").innerHTML = "GIOCA";
+        document.getElementById("tempo").innerHTML = 01+":"+20;
+        clearTimeout(timerino);
+      }
+    }
+    function startTimer() {
+      if(flag) {
+        var presentTime = document.getElementById("tempo").innerHTML;
+        var timeArray = presentTime.split(/[:]+/);
+        var m = timeArray[0];
+        var s = checkSecond((timeArray[1] - 1));
+        if(s==59) {
+          m=m-1;
+        }
+        if(m<0) {
+          document.getElementById('bottone').innerHTML="RIGIOCA";
+          document.getElementById("invia").disabled = true;
+          return;
+        }
+        document.getElementById('tempo').innerHTML = m+":"+s;
+        timerino = setTimeout(startTimer, 1000);
+      }
+    }
+    function checkSecond(sec) {
+      if (sec < 10 && sec >= 0)
+        sec = "0" + sec;
+      if (sec < 0)
+        sec = "59";
+      return sec;
+    }
+    </script>
+  </body>
+</html>
