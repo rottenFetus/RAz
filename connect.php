@@ -5,7 +5,7 @@ header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
  echo implode('~',prendiDati());
 
 function connettiDB(){
-  $mysqliLink = new mysqli('192.168.1.127', 'Minestrone', 'gioele123', 'prova');
+  $mysqliLink = new mysqli('198.91.81.7', 'razx10m2', 'LOLxdtunzi5.', 'razx10m2_tabella');
   if(mysqli_connect_errno()){
     exit();
   }

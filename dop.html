@@ -11,7 +11,7 @@
     var trovate=[];
     var cons=true;
     $(function(){
-      $.get("http://localhost/RAz/connect.php",function(data){
+      $.get("http://raz.x10.mx/Raz/connect.php",function(data){
         parole = data.split('~');
       });
       $(".bottoneInvia").click(function(){
@@ -21,9 +21,14 @@
         for(var j=0; j<trovate.length; j++){
           if(ins == trovate[j]){
             cons=false;
+            document.getElementById("O").style.display="block";
             document.getElementById("ins").value="";
             document.getElementById("O").innerHTML="GIÀ MESSA!";
             document.getElementById("O").style.backgroundColor="#ffad33";
+            setTimeout(function(){
+                document.getElementById("O").style.display="none";
+            }, 1000);
+
             return;
           }
         }
@@ -33,17 +38,25 @@
             document.getElementById("punti").innerHTML = punt;
             trovate.push(ins);
             i=70618;
+            document.getElementById("O").style.display="block";
             document.getElementById("ins").value="";
             document.getElementById("O").innerHTML="GIUSTO!";
             document.getElementById("O").style.backgroundColor="#2eb82e";
+            setTimeout(function(){
+                document.getElementById("O").style.display="none";
+            }, 1000);
             return;
           }
         }
         if(ins=="")
         return;
+        document.getElementById("O").style.display="block";
         document.getElementById("ins").value="";
         document.getElementById("O").innerHTML="SBAGLIATO!";
         document.getElementById("O").style.backgroundColor="#ff3333";
+        setTimeout(function(){
+            document.getElementById("O").style.display="none";
+        }, 1000);
       });
       var cella;
       function inserimento(cella){
