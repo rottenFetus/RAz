@@ -202,7 +202,7 @@
     }
     </style>
   </head>
-  <body style="background: url(swaggate/snoopD.gif) left bottom,url(swaggate/wp.gif);">
+  <body style="background: url(swaggate/snoopD.gif) left bottom,url(swaggate/wp.gif);" onload="classificaDB()">
     <div class="colonnaLaterale">
       <p class="tempo inselezionabile" id="tempo">1:20</p>
       <button class="bottoneStart" id="bottone" onclick="bottone()">GIOCA</button>
@@ -241,44 +241,36 @@
       <p style="font:bold 32px arial;color:#9999ff;margin:0;text-decoration:underline;" class="inselezionabile">CLASSIFICA</p>
       <table class="classifica">
         <tr>
-          <td id="n0">Zakmy</td>
-          <td id="p0">110</td>
+          <td id="n0"></td>
+          <td id="p0"></td>
         </tr>
         <tr>
-          <td id="n0">swag</td>
-          <td id="p0">94</td>
+          <td id="n1"></td>
+          <td id="p1"></td>
         </tr>
         <tr>
-          <td id="n0">asdasd</td>
-          <td id="p0">85</td>
+          <td id="n2"></td>
+          <td id="p2"></td>
         </tr>
         <tr>
-          <td id="n0">lollone</td>
-          <td id="p0">76</td>
+          <td id="n3"></td>
+          <td id="p3"></td>
         </tr>
         <tr>
-          <td id="n0">minestrone</td>
-          <td id="p0">65</td>
+          <td id="n4"></td>
+          <td id="p4"></td>
         </tr>
         <tr>
-          <td id="n0">iooo</td>
-          <td id="p0">54</td>
+          <td id="n5"></td>
+          <td id="p5"></td>
         </tr>
         <tr>
-          <td id="n0">gigidag</td>
-          <td id="p0">48</td>
+          <td id="n6"></td>
+          <td id="p6"></td>
         </tr>
         <tr>
-          <td id="n0">tuo padre</td>
-          <td id="p0">39</td>
-        </tr>
-        <tr>
-          <td id="n0">luigi</td>
-          <td id="p0">24</td>
-        </tr>
-        <tr>
-          <td id="n0">giangy</td>
-          <td id="p0">17</td>
+          <td id="n7"></td>
+          <td id="p7"></td>
         </tr>
       </table>
     </div>
@@ -287,6 +279,49 @@
     var flag = false;
     var timerino;
     document.getElementById("ins").disabled = true;
+
+
+    function classificaDB() {
+      var temp;
+      var oReq = new XMLHttpRequest();
+      oReq.onload = function() {
+        temp = (JSON.stringify(this.responseText));
+        temp = temp.substring(1, temp.length - 2);
+        array = temp.split("/");
+        for(var i = 0; i < array.length; i++) {
+          var temp1 = [];
+          temp1 = array[i].split("-");
+          document.getElementById("n" + i).innerHTML = temp1[0];
+          document.getElementById("p" + i).innerHTML = temp1[1];
+        }
+      };
+      oReq.open("get", "prova1.php", true);
+      oReq.send();
+    }
+
+
+    function controllaPunteggio() {
+      var t = document.getElementById("p7").innerHTML;
+      alert(punt);
+      if(punt > t) {
+        do {
+          var nome = prompt("Complimenti hai superato un giocatore in classifica! Inserisci il tuo nome:");
+        }while(nome == "");
+        var player = [];
+        var score = [];
+        for(var i = 0; i < array.length; i++) {
+          var temp = [];
+          temp = array[i].split("-");
+          player[i] = temp[0];
+          score[i] = temp[1];
+        }
+        $.get("inserisciDatabase.php", {q: nome, p: punt, n: player, s: score});
+        alert("Aggiunto in classifica!!");
+        classificaDB();
+      }
+    }
+
+
     function generaLettere() {
       var vocali="AEIOU";
       var consonanti="BCDFGHLMNPQRSTVZ";
@@ -325,13 +360,19 @@
       }
       return lettere;
     }
+
+
     function mettiLettere() {
       for(var i=0;i<12;i++) {
         document.getElementById("c"+i).innerHTML=lettere[i];
       }
       return;
     }
+
+
     var let="";
+
+
     function char_consentiti() {
       let="";
       for(var i=0; i<12;i++) {
@@ -347,6 +388,9 @@
         return false;
       };
     }
+
+
+
     function bottone() {
       var bool = document.getElementById('bottone').innerHTML;
       if(bool == "GIOCA") {
@@ -374,6 +418,9 @@
         clearTimeout(timerino);
       }
     }
+
+
+
     function startTimer() {
       if(flag) {
         var presentTime = document.getElementById("tempo").innerHTML;
@@ -386,12 +433,16 @@
         if(m<0) {
           document.getElementById('bottone').innerHTML="RIGIOCA";
           document.getElementById("invia").disabled = true;
+          controllaPunteggio();
           return;
         }
         document.getElementById('tempo').innerHTML = m+":"+s;
         timerino = setTimeout(startTimer, 1000);
       }
     }
+
+
+
     function checkSecond(sec) {
       if (sec < 10 && sec >= 0)
         sec = "0" + sec;
