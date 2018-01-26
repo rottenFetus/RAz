@@ -1,8 +1,8 @@
 <?php
-$servername = "localhost";
-$username = "Minestrone";
-$password = "gioele123";
-$dbname = "prova";
+$servername = "198.91.81.7";
+$username = "razx10m2";
+$password = "LOLxdtunzi5.";
+$dbname = "razx10m2_tabella";
 
 $q = $_REQUEST["q"];
 $p = $_REQUEST["p"];

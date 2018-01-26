@@ -28,6 +28,10 @@ function controllaPunteggio() {
   if(punt > t) {
     do {
       var nome = prompt("Complimenti hai superato un giocatore in classifica! Inserisci il tuo nome:");
+      if(nome.length>10){
+        alert("Inserire massimo 10 caratteri.");
+        nome="";
+      }
     }while(nome == "");
     var player = [];
     var score = [];
